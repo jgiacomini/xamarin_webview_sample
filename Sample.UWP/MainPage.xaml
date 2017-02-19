@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="Sample.UWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sample.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <Button x:Name="btnExternalWebPage"
+                    Click="btnExternalWebPage_Click">
+                Page web externe
+            </Button>
+            <Button x:Name="btnInAppHtmlPage"
+                    Click="btnInAppHtmlPage_Click">
+                Page Html interne
+            </Button>
+            <Button x:Name="btnHtmlContentPage"
+                    Click="btnHtmlContentPage_Click">
+                Contenu html brut
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>
