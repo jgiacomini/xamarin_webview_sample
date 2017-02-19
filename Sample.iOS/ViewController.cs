@@ -8,6 +8,13 @@ namespace Sample.iOS
     {
         public ViewController(IntPtr handle) : base(handle)
         {
+            UIWebView webView = new UIWebView(View.Bounds);
+            // Ajout du contrôle en tant que sous au contrôleur principal
+            View.AddSubview(webView);
+            // Création de l’uri
+            var uri = new Uri("https://www.google.fr");
+            webView.LoadRequest(new Foundation.NSUrlRequest(uri));
+
         }
 
         public override void ViewDidLoad()
