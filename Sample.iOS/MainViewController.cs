@@ -9,6 +9,11 @@ namespace Sample.iOS
 {
 	public class MainViewController : UIViewController
 	{
+		public UIWebView WebView
+		{
+			get;
+			set;
+		}
 		public MainViewController()
 		{
 			Tests();
@@ -18,16 +23,18 @@ namespace Sample.iOS
 		async void Tests()
 		{
 			UIWebView webView = new UIWebView(View.Bounds);
+			WebView = webView;
+
 			// Ajout du contrôle en tant que sous au contrôleur principal
 			View.AddSubview(webView);
+
+			TestEvents(webView);
 
 			await TestUriAsync(webView);
 
 			await TestScalesPageToFitAsync(webView);
 
-			await TestLocalHtmlPageAsync(webView);
-
-			await TestLocalHtmlPageAsync(webView);
+			await TestLocalEmbbededHtmlPageAsync(webView);
 
 			await TestLocalHtmlPageAsync(webView);
 
@@ -79,10 +86,8 @@ namespace Sample.iOS
 			// Chargement de la string de la page html
 			webView.LoadHtmlString(html, new NSUrl(contentDirectory, true));
 
-		
-		
 			await Task.Delay(5000);
-		
+
 			html = "<html><body><h1>Hello</h1><br /> <img src=\"xamarin.png\" alt=\"Xamarin logo\" height=\"200\" width=\"200\"> </body></html>";
 			// Chargement de la string de la page html
 			webView.LoadHtmlString(html, new NSUrl(contentDirectory, true));
@@ -93,21 +98,30 @@ namespace Sample.iOS
 			webView.LoadStarted += WebView_LoadStarted;
 			webView.LoadError += WebView_LoadError;
 			webView.LoadFinished += WebView_LoadFinished;
+
+			webView.LoadRequest(new NSUrlRequest(new NSUrl("http://www.unepageinexistante.com")));
 		}
 
 		void WebView_LoadStarted(object sender, EventArgs e)
 		{
-			Debug.WriteLine("Chargement de la page");
+            UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
+			Debug.WriteLine("Chargement d'un élément de la page");
 		}
 
 		void WebView_LoadError(object sender, UIWebErrorArgs e)
 		{
-			Debug.WriteLine("Erreur lors du chargement de la page");
+            UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
+			Debug.WriteLine("Erreur lors d'un élément de la page");
+			Debug.WriteLine(e.Error.LocalizedDescription);
+			Debug.WriteLine(e.Error.LocalizedFailureReason);
 		}
 
 		void WebView_LoadFinished(object sender, EventArgs e)
 		{
-			Debug.WriteLine("Page chargée");
+			if(!WebView.IsLoading)
+				Debug.WriteLine("Page chargée");
+			
+            UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 		}
 
 		public override void ViewDidLoad()
