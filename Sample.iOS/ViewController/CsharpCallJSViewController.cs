@@ -6,36 +6,44 @@ using UIKit;
 
 namespace Sample.iOS
 {
-	public class JSCallCsharpViewController : UIViewController
+	public class CsharpCallJSViewController : UIViewController
 	{
-		public JSCallCsharpViewController()
+		public CsharpCallJSViewController()
 		{
 			View.BackgroundColor = UIColor.White;
 
+			UIButton testButton = UIButton.FromType(UIButtonType.RoundedRect);
+			testButton.SetTitle("Invoque une fonction javascript", UIControlState.Normal);
+			testButton.TouchUpInside += TestButton_TouchUpInside;
+			testButton.SizeToFit();
+
+			testButton.Center = View.Center;
 			UIWebView webView = new UIWebView(View.Bounds);
-			webView.ShouldStartLoad = OnStartLoad;
+
+			WebView = webView;
 
 			// Recherche du chemin de la ressource 
-			string htmlPath = NSBundle.MainBundle.PathForResource("javascript_callcsharp", "html");
+			string htmlPath = NSBundle.MainBundle.PathForResource("content/csharp_call_javascript", "html");
 			// Lecture du flux html
 			string htmlContents = File.ReadAllText(htmlPath);
 			// Chargement de la string de la page html
 			webView.LoadHtmlString(htmlContents, null);
 
 			// Ajout du contrôle en tant que sous au contrôleur principal
-			View.AddSubviews(webView);
+			View.AddSubviews(webView, testButton);
 
 		}
-			
-		private bool OnStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
+
+	
+		void TestButton_TouchUpInside(object sender, EventArgs e)
 		{
-			// On vérifie que c'est bien la bonne url qui appelle notre code C#
-			if (request.MainDocumentURL.ToString() == "callios://functionTest")
-			{
-				// On affiche une alerte
-				new UIAlertView("Valider", "Fonction C# invoquée", null, "ok", null).Show();
-			}
-			return true;
+			WebView.EvaluateJavascript("myFunction();");
+		}
+
+		public UIWebView WebView
+		{
+			get;
+			set;
 		}
 
 		public override void ViewDidLoad()

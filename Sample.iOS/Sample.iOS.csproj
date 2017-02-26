@@ -88,9 +88,9 @@
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MainViewController.cs" />
-    <Compile Include="CsharpCallJSViewController.cs" />
-    <Compile Include="JSCallCsharpViewController.cs" />
+    <Compile Include="ViewController\CsharpCallJSViewController.cs" />
+    <Compile Include="ViewController\JSCallCsharpViewController.cs" />
+    <Compile Include="ViewController\MainViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
@@ -106,12 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
+    <Folder Include="ViewController\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\InAppHtmlPage.html" />
     <BundleResource Include="Content\xamarin.png" />
-    <BundleResource Include="csharp_call_javascript.html" />
-    <BundleResource Include="javascript_callcsharp.html" />
+    <BundleResource Include="Content\csharp_call_javascript.html" />
+    <BundleResource Include="Content\javascript_callcsharp.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
