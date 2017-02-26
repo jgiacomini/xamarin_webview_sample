@@ -23,7 +23,10 @@ namespace Sample.iOS
 			Window = new UIWindow(UIScreen.MainScreen.Bounds);
 
 			// Initialisation du contrôleur de vue par défaut 
-			MainViewController viewController = new Sample.iOS.MainViewController();
+			// MainViewController viewController = new Sample.iOS.MainViewController();
+
+			// Pour les exemples avancés décommentez ce bloc
+			var viewController = new Sample.iOS.AdvancedWebViewController();
 
 			// Initialisation du contrôleur de navigation
 			 var navigationController = new UINavigationController(viewController);

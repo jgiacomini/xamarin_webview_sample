@@ -25,6 +25,7 @@ namespace Sample.iOS
 			UIWebView webView = new UIWebView(View.Bounds);
 			WebView = webView;
 
+
 			// Ajout du contrôle en tant que sous au contrôleur principal
 			View.AddSubview(webView);
 
@@ -40,11 +41,13 @@ namespace Sample.iOS
 
 		}
 
+
+
 		async Task TestUriAsync(UIWebView webView)
 		{
 			// Création de l’uri
 			var uri = new Uri("http://www.google.fr");
-			webView.LoadRequest(new Foundation.NSUrlRequest(uri));
+			webView.LoadRequest(new NSUrlRequest(uri));
 
 			await Task.Delay(5000);
 		}
@@ -118,9 +121,10 @@ namespace Sample.iOS
 
 		void WebView_LoadFinished(object sender, EventArgs e)
 		{
-			if(!WebView.IsLoading)
+			if (!WebView.IsLoading)
+			{
 				Debug.WriteLine("Page chargée");
-			
+			}			
             UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 		}
 
